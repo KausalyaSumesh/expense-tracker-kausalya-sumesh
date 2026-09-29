@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <main class="app-container">
+
+        <!--Header-->
+
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-icon">
+                    ₹
+                </div>
+
+                <div>
+                    <h1>Expense Tracker</h1>
+                    <p>
+                        Keep track of your money, one transaction at a time.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!--Summary-->
+
+        <section class="summary-section">
+
+            <div class="summary-card balance-card">
+
+                <div class="summary-label">
+                    <span class="summary-dot balance-dot"></span>
+
+                    Current Balance
+
+                </div>
+
+                <h2 id="balance-total">
+                    ₹0.00
+                </h2>
+
+                <p class="summary-description">
+                    Available balance
+                </p>
+
+            </div>
+
+            <div class="summary-card income-card">
+
+                <div class="summary-label">
+                    <span class="summary-dot income-dot"></span>
+
+                    Total Income
+
+                </div>
+
+                <h2 id="income-total">
+                    ₹0.00
+                </h2>
+
+                <p class="summary-description">
+                    Money received
+                </p>
+
+            </div>
+
+            <div class="summary-card expense-card">
+                <div class="summary-label">
+                    <span class="summary-dot expense-dot"></span>
+
+                    Total Expenses
+
+                </div>
+
+                <h2 id="expenses-total">
+                    ₹0.00
+                </h2>
+
+                <p class="summary-description">
+                    Money spent
+                </p>
+            </div>
+        </section>
+
+        <section class="main-grid">
+
+            <!--Add Transaction-->
+
+            <div class="app-card transaction-card">
+                <div class="card-heading">
+                    <div>
+                        <span class="section-tag">
+                            MONEY
+                        </span>
+
+                        <h2 id="form-title">
+                            Add Transaction
+                        </h2>
+
+                        <p>
+                            Record your income or spending.
+                        </p>
+
+                    </div>
+                </div>
+
+                <form
+                    id="transaction-form"
+                    novalidate
+                >
+
+                    <!-- TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="type">
+                            Transaction Type
+                        </label>
+
+                        <select id="type">
+
+                            <option value="income">
+                                Income
+                            </option>
+
+                            <option value="expense">
+                                Expense
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- AMOUNT -->
+
+                    <div class="form-group">
+
+                        <label for="amount">
+                            Amount
+                        </label>
+
+                        <div class="amount-input">
+
+                            <span>₹</span>
+
+                            <input
+                                type="number"
+                                id="amount"
+                                placeholder="0.00"
+                                min="0.01"
+                                step="0.01"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- CATEGORY -->
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <select
+                            id="category"
+                            required
+                        >
+
+                            <option value="Salary">
+                                Salary
+                            </option>
+
+                            <option value="Food">
+                                Food
+                            </option>
+
+                            <option value="Transport">
+                                Transport
+                            </option>
+
+                            <option value="Shopping">
+                                Shopping
+                            </option>
+
+                            <option value="Bills">
+                                Bills
+                            </option>
+
+                            <option value="Entertainment">
+                                Entertainment
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- DATE -->
+
+                    <div class="form-group">
+
+                        <label for="date">
+                            Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group full-width">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <input
+                            type="text"
+                            id="description"
+                            placeholder="e.g. Grocery shopping"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- ERROR -->
+
+                    <p
+                        id="form-error"
+                        class="form-error"
+                        role="alert"
+                    ></p>
+
+                    <!-- BUTTONS -->
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            id="submit-btn"
+                            class="primary-button"
+                        >
+                            Add Transaction
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="cancel-btn"
+                            class="secondary-button"
+                            hidden
+                        >
+                            Cancel
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!--  SPENDING OVERVIEW -->
+
+            <div class="app-card overview-card">
+                <div class="card-heading">
+                    <div>
+                        <span class="section-tag">
+                            OVERVIEW
+                        </span>
+
+                        <h2>
+                            Spending Overview
+                        </h2>
+
+                        <p>
+                            See where your money is going.
+                        </p>
+
+                    </div>
+                </div>
+
+                <!-- CHART -->
+
+                <div class="chart-container">
+
+                    <canvas
+                        id="expense-chart"
+                        width="300"
+                        height="300"
+                    ></canvas>
+
+                </div>
+
+                <!-- CHART LEGEND -->
+
+                <div
+                    id="chart-legend"
+                    class="chart-legend"
+                ></div>
+            </div>
+        </section>
+
+
+        <!--TRANSACTIONS-->
+
+        <section class="app-card transactions-card">
+
+            <div class="transactions-header">
+                <div>
+
+                    <span class="section-tag">
+                        ACTIVITY
+                    </span>
+
+                    <h2>
+                        Transactions
+                    </h2>
+
+                    <p>
+                        Your recent income and expenses.
+                    </p>
+
+                </div>
+
+                <!-- FILTERS -->
+
+                <div class="filters">
+                    <div class="filter-group">
+
+                        <label for="filter-type">
+                            Type
+                        </label>
+
+                        <select id="filter-type">
+
+                            <option value="all">
+                                All
+                            </option>
+
+                            <option value="income">
+                                Income
+                            </option>
+
+                            <option value="expense">
+                                Expense
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-category">
+                            Category
+                        </label>
+
+                        <select id="filter-category">
+
+                            <option value="all">
+                                All Categories
+                            </option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRANSACTION TABLE -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody id="transaction-list">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EMPTY STATE -->
+
+            <div
+                id="empty-message"
+                class="empty-state"
+                hidden
+            >
+
+                <div class="empty-icon">
+                    ₹
+                </div>
+
+                <h3>
+                    No transactions yet
+                </h3>
+
+                <p>
+                    Add your first transaction to start tracking your money.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!--FOOTER-->
+
+        <footer class="app-footer">
+
+            <p>
+                Expense Tracker • Your money, organized.
+            </p>
+
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
