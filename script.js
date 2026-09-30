@@ -1,11 +1,7 @@
-/* =========================================
-   EXPENSE TRACKER
-========================================= */
+/*--Expense Tracker--*/
 
 
-/* =========================================
-   STORAGE
-========================================= */
+/*--Storage--*/
 
 const KEY = "expense-tracker-data";
 
@@ -26,9 +22,7 @@ const form =
     $("transaction-form");
 
 
-/* =========================================
-   LOCAL STORAGE
-========================================= */
+/*--Local Storage--*/
 
 const save = () => {
 
@@ -39,10 +33,7 @@ const save = () => {
 
 };
 
-
-/* =========================================
-   CURRENCY FORMAT
-========================================= */
+/*--Currency Format--*/
 
 const inr = (n) =>
     "₹" +
@@ -53,7 +44,6 @@ const inr = (n) =>
             maximumFractionDigits: 2
         }
     );
-
 
 /* =========================================
    SECURITY
@@ -75,9 +65,7 @@ const escapeHTML = (s) =>
     );
 
 
-/* =========================================
-   CATEGORY FILTER
-========================================= */
+/*--Category Filter--*/
 
 [
     ...$("category").options
@@ -92,25 +80,18 @@ const escapeHTML = (s) =>
 
 });
 
-
-/* =========================================
-   DEFAULT DATE
-========================================= */
+/*--Default Date--*/
 
 $("date").valueAsDate =
     new Date();
 
 
-/* =========================================
-   MAIN RENDER FUNCTION
-========================================= */
+/*--Main Render Function--*/
 
 function render() {
 
 
-    /* -------------------------------------
-       CALCULATE SUMMARY
-    ------------------------------------- */
+    /*--Calculate Summary--*/
 
     const income =
         transactions
@@ -123,7 +104,6 @@ function render() {
                 0
             );
 
-
     const expense =
         transactions
             .filter(
@@ -135,10 +115,7 @@ function render() {
                 0
             );
 
-
-    /* -------------------------------------
-       DISPLAY SUMMARY
-    ------------------------------------- */
+    /*--Display Summary--*/
 
     $("income-total").textContent =
         inr(income);
@@ -150,9 +127,7 @@ function render() {
         inr(income - expense);
 
 
-    /* -------------------------------------
-       FILTER TRANSACTIONS
-    ------------------------------------- */
+    /*--Filter Transaction--*/
 
     const filterType =
         $("filter-type").value;
@@ -181,9 +156,7 @@ function render() {
             );
 
 
-    /* -------------------------------------
-       DISPLAY TRANSACTIONS
-    ------------------------------------- */
+    /*--Display Transaction--*/
 
     $("transaction-list").innerHTML =
 
@@ -246,26 +219,20 @@ function render() {
         ).join("");
 
 
-    /* -------------------------------------
-       EMPTY MESSAGE
-    ------------------------------------- */
+    /*--Empty Message--*/
 
     $("empty-message").hidden =
         list.length > 0;
 
 
-    /* -------------------------------------
-       UPDATE CHART
-    ------------------------------------- */
+    /*--Update Chart--*/
 
     drawExpenseChart();
 
 }
 
 
-/* =========================================
-   RESET FORM
-========================================= */
+/*--Reset Form--*/
 
 function resetForm() {
 
@@ -290,10 +257,7 @@ function resetForm() {
 
 }
 
-
-/* =========================================
-   ADD / UPDATE TRANSACTION
-========================================= */
+/*--Add/Update Transaction--*/
 
 form.addEventListener(
     "submit",
@@ -318,9 +282,7 @@ form.addEventListener(
             $("date").value;
 
 
-        /* ---------------------------------
-           VALIDATION
-        --------------------------------- */
+        /*--Validation-- */
 
         if (
             !amount ||
@@ -334,7 +296,6 @@ form.addEventListener(
 
         }
 
-
         if (!description) {
 
             $("form-error").textContent =
@@ -343,7 +304,6 @@ form.addEventListener(
             return;
 
         }
-
 
         if (!date) {
 
@@ -354,10 +314,7 @@ form.addEventListener(
 
         }
 
-
-        /* ---------------------------------
-           CREATE TRANSACTION DATA
-        --------------------------------- */
+        /*--Create Transaction Data-- */
 
         const data = {
 
@@ -378,10 +335,7 @@ form.addEventListener(
 
         };
 
-
-        /* ---------------------------------
-           UPDATE EXISTING TRANSACTION
-        --------------------------------- */
+        /*--Update Existing Transaction--*/
 
         if (editingId) {
 
@@ -398,10 +352,7 @@ form.addEventListener(
 
         }
 
-
-        /* ---------------------------------
-           ADD NEW TRANSACTION
-        --------------------------------- */
+        /*--Add New Transaction--*/
 
         else {
 
@@ -416,24 +367,16 @@ form.addEventListener(
 
         }
 
-
-        /* ---------------------------------
-           SAVE + UPDATE UI
-        --------------------------------- */
+        /*--Save+Update UI--*/
 
         save();
-
         render();
-
         resetForm();
 
     }
 );
 
-
-/* =========================================
-   EDIT + DELETE
-========================================= */
+/*--Edit+Delete--*/
 
 $("transaction-list")
     .addEventListener(
@@ -443,18 +386,13 @@ $("transaction-list")
             const btn =
                 e.target.closest("button");
 
-
             if (!btn)
                 return;
-
 
             const id =
                 btn.dataset.id;
 
-
-            /* ---------------------------------
-               DELETE
-            --------------------------------- */
+            /*--Delete--*/
 
             if (
                 btn.dataset.action ===
@@ -474,17 +412,13 @@ $("transaction-list")
                         );
 
                     save();
-
                     render();
 
                 }
 
             }
 
-
-            /* ---------------------------------
-               EDIT
-            --------------------------------- */
+            /*--Edit--*/
 
             else if (
                 btn.dataset.action ===
@@ -497,10 +431,8 @@ $("transaction-list")
                             t.id === id
                     );
 
-
                 if (!transaction)
                     return;
-
 
                 $("type").value =
                     transaction.type;
@@ -517,21 +449,16 @@ $("transaction-list")
                 $("description").value =
                     transaction.description;
 
-
                 editingId = id;
-
 
                 $("form-title").textContent =
                     "Edit Transaction";
 
-
                 $("submit-btn").textContent =
                     "Update Transaction";
 
-
                 $("cancel-btn").hidden =
                     false;
-
 
                 form.scrollIntoView({
                     behavior: "smooth"
@@ -542,10 +469,7 @@ $("transaction-list")
         }
     );
 
-
-/* =========================================
-   CANCEL EDIT
-========================================= */
+/*--Cancel Edit--*/
 
 $("cancel-btn")
     .addEventListener(
@@ -553,10 +477,7 @@ $("cancel-btn")
         resetForm
     );
 
-
-/* =========================================
-   FILTERS
-========================================= */
+/*--Filter--*/
 
 $("filter-type")
     .addEventListener(
@@ -564,30 +485,22 @@ $("filter-type")
         render
     );
 
-
 $("filter-category")
     .addEventListener(
         "change",
         render
     );
 
-
-/* =========================================
-   EXPENSE CHART
-========================================= */
+/*--Expense Chart--*/
 
 function drawExpenseChart() {
-
     const canvas =
         $("expense-chart");
 
     const ctx =
         canvas.getContext("2d");
 
-
-    /* -------------------------------------
-       CLEAR PREVIOUS CHART
-    ------------------------------------- */
+    /*--Clear Previous Chart--*/
 
     ctx.clearRect(
         0,
@@ -596,13 +509,9 @@ function drawExpenseChart() {
         canvas.height
     );
 
-
-    /* -------------------------------------
-       GROUP EXPENSES BY CATEGORY
-    ------------------------------------- */
+    /*--Group Expenses by Category-- */
 
     const categoryTotals = {};
-
 
     transactions
         .filter(
@@ -624,7 +533,6 @@ function drawExpenseChart() {
 
                 }
 
-
                 categoryTotals[
                     t.category
                 ] += t.amount;
@@ -632,16 +540,12 @@ function drawExpenseChart() {
             }
         );
 
-
     const entries =
         Object.entries(
             categoryTotals
         );
 
-
-    /* -------------------------------------
-       NO EXPENSES
-    ------------------------------------- */
+    /*--No Expenses--*/
 
     if (entries.length === 0) {
 
@@ -665,7 +569,6 @@ function drawExpenseChart() {
 
     }
 
-
     /* -------------------------------------
        SORT CATEGORIES
        Highest expense first
@@ -677,9 +580,7 @@ function drawExpenseChart() {
     );
 
 
-    /* -------------------------------------
-       COLORS
-    ------------------------------------- */
+    /*--Colors--*/
 
     const colors = [
 
@@ -693,10 +594,7 @@ function drawExpenseChart() {
 
     ];
 
-
-    /* -------------------------------------
-       TOTAL EXPENSE
-    ------------------------------------- */
+    /*--Expense Tracker--*/
 
     const total =
         entries.reduce(
@@ -705,10 +603,7 @@ function drawExpenseChart() {
             0
         );
 
-
-    /* -------------------------------------
-       CHART SETTINGS
-    ------------------------------------- */
+    /*--Chart Settings--*/
 
     const centerX =
         canvas.width / 2;
@@ -722,21 +617,16 @@ function drawExpenseChart() {
     const lineWidth =
         30;
 
-
     let startAngle =
         -Math.PI / 2;
 
-
-    /* -------------------------------------
-       DRAW DONUT
-    ------------------------------------- */
+    /*--Donut Chart--*/
 
     entries.forEach(
         (entry, index) => {
 
             const value =
                 entry[1];
-
 
             const sliceAngle =
                 (
@@ -745,14 +635,11 @@ function drawExpenseChart() {
                 Math.PI *
                 2;
 
-
             const endAngle =
                 startAngle +
                 sliceAngle;
 
-
             ctx.beginPath();
-
 
             ctx.arc(
                 centerX,
@@ -762,24 +649,19 @@ function drawExpenseChart() {
                 endAngle
             );
 
-
             ctx.strokeStyle =
                 colors[
                     index %
                     colors.length
                 ];
 
-
             ctx.lineWidth =
                 lineWidth;
-
 
             ctx.lineCap =
                 "butt";
 
-
             ctx.stroke();
-
 
             startAngle =
                 endAngle;
@@ -787,13 +669,9 @@ function drawExpenseChart() {
         }
     );
 
-
-    /* -------------------------------------
-       WHITE CENTER
-    ------------------------------------- */
+    /*--White Center--*/
 
     ctx.beginPath();
-
 
     ctx.arc(
         centerX,
@@ -803,33 +681,24 @@ function drawExpenseChart() {
         Math.PI * 2
     );
 
-
     ctx.fillStyle =
         "#FFFFFF";
 
-
     ctx.fill();
 
-
-    /* -------------------------------------
-       CENTER TEXT
-    ------------------------------------- */
+    /*--Center Text-- */
 
     ctx.textAlign =
         "center";
 
-
     ctx.textBaseline =
         "middle";
-
 
     ctx.fillStyle =
         "#292733";
 
-
     ctx.font =
         "bold 17px Arial";
-
 
     ctx.fillText(
         inr(total),
@@ -837,14 +706,11 @@ function drawExpenseChart() {
         centerY - 7
     );
 
-
     ctx.fillStyle =
         "#7A7785";
 
-
     ctx.font =
         "11px Arial";
-
 
     ctx.fillText(
         "Total spent",
@@ -852,10 +718,7 @@ function drawExpenseChart() {
         centerY + 14
     );
 
-
-    /* -------------------------------------
-       CREATE LEGEND
-    ------------------------------------- */
+    /*--Create Legend--*/
 
     $("chart-legend").innerHTML =
 
@@ -869,7 +732,6 @@ function drawExpenseChart() {
                     const amount =
                         entry[1];
 
-
                     const percentage =
                         (
                             amount /
@@ -877,13 +739,9 @@ function drawExpenseChart() {
                         ) *
                         100;
 
-
                     return `
-
                         <div class="legend-item">
-
                             <div class="legend-name">
-
                                 <span
                                     class="legend-dot"
                                     style="
@@ -895,22 +753,17 @@ function drawExpenseChart() {
                                         };
                                     "
                                 ></span>
-
                                 <span>
                                     ${category}
                                 </span>
-
                             </div>
-
                             <span class="legend-amount">
 
                                 ${inr(amount)}
                                 (${percentage.toFixed(1)}%)
 
                             </span>
-
                         </div>
-
                     `;
 
                 }
@@ -919,10 +772,7 @@ function drawExpenseChart() {
 
 }
 
-
-/* =========================================
-   EMPTY CHART
-========================================= */
+/*--Empty Chart--*/
 
 function drawEmptyChart(
     ctx,
@@ -936,12 +786,9 @@ function drawEmptyChart(
         canvas.height / 2;
 
 
-    /* -------------------------------------
-       OUTER RING
-    ------------------------------------- */
+    /*--Outer Ring--*/
 
     ctx.beginPath();
-
 
     ctx.arc(
         centerX,
@@ -951,37 +798,27 @@ function drawEmptyChart(
         Math.PI * 2
     );
 
-
     ctx.strokeStyle =
         "#E8E5E1";
-
 
     ctx.lineWidth =
         30;
 
-
     ctx.stroke();
 
-
-    /* -------------------------------------
-       CENTER
-    ------------------------------------- */
+    /*--Center--*/
 
     ctx.textAlign =
         "center";
 
-
     ctx.textBaseline =
         "middle";
-
 
     ctx.fillStyle =
         "#7A7785";
 
-
     ctx.font =
         "12px Arial";
-
 
     ctx.fillText(
         "No expenses",
@@ -991,9 +828,6 @@ function drawEmptyChart(
 
 }
 
-
-/* =========================================
-   INITIAL DISPLAY
-========================================= */
+/*--Initial Display--*/
 
 render();
