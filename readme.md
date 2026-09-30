@@ -1,6 +1,6 @@
 # Expense Tracker
 
-A responsive web-based Expense Tracker built using HTML, CSS, and JavaScript. The application allows users to manage income and expense transactions, view their financial summary, filter transactions, and keep their data saved using browser Local Storage.
+A responsive web-based Expense Tracker built using HTML, CSS, and JavaScript. The application allows users to manage income and expense transactions, view their financial summary, filter transactions, and persist data using browser Local Storage.
 
 ## Features
 
@@ -29,11 +29,14 @@ A responsive web-based Expense Tracker built using HTML, CSS, and JavaScript. Th
 ## How to Run
 
 1. Clone or download this repository.
-2. Open the project folder in Visual Studio Code.
-3. Open index.html using a local development server such as VS Code Live Server.
-4. The Expense Tracker will open in your web browser.
+2. If downloaded as a ZIP file, extract the project folder.
+3. Open the project folder in Visual Studio Code.
+4. Install the **Live Server** extension in VS Code if it is not already installed.
+5. Open `index.html`.
+6. Right-click `index.html` and select **Open with Live Server**.
+7. The Expense Tracker will open in your web browser.
 
-No additional libraries or installation steps are required.
+No additional libraries, dependencies, or package installation are required.
 
 ## Project Structure
 
