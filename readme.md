@@ -26,6 +26,15 @@ A responsive web-based Expense Tracker built using HTML, CSS, and JavaScript. Th
 - Browser Local Storage
 - HTML Canvas API
 
+## How to Run
+
+1. Clone or download this repository.
+2. Open the project folder in Visual Studio Code.
+3. Open index.html using a local development server such as VS Code Live Server.
+4. The Expense Tracker will open in your web browser.
+
+No additional libraries or installation steps are required.
+
 ## Project Structure
 
 ```text
